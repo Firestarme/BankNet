@@ -6,7 +6,7 @@ local ser = require("serialization")
 
 function lib.getPri(t)
 
-  return c.modem,c.immimbis_peripherials_crypto
+  return com.modem,com.immimbis_peripherials_crypto
   
 end
 

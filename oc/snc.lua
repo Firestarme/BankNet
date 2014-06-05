@@ -2,9 +2,17 @@ local lib = {}
 lib.event = require("event")
 
 function lib.sendMsg(t,msg)
-
-  t.modem.sendMsg(t.ra,t.p,msg)
-
+  
+  if t.ra ~= nil then
+  
+    t.modem.sendMsg(t.ra,t.p,msg)
+  
+  else
+  
+    t.modem.broadcast(t.p,msg)
+  
+  end
+  
 end
 
 function lib.recieveMsg(t,to)

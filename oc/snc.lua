@@ -2,34 +2,51 @@ local lib = {}
 
 local event = require("event")
 local com = require("component")
+local ser = require("serialization")
 
-function lib.open(t)
+function lib.getPri(t)
 
-	com.modem.open(t.po)
-	
+  return c.modem,c.immimbis_peripherials_crypto
+  
 end
 
-function lib.sendMsg(t,sub,msg)
+local function deconcat(sy,str)
+
+  a = string.match(str,"[^"..sy.."]+")
+  b = string.sub(string.match(str,sy.."[^"..sy.."]+"),2)
+  return a,b
   
-  if t.ra ~= nil then
+end
+
+local function split(s,l)
+
+  a = s:sub(0,l)
+  b = s:sub(l+1)
+  return a,b
   
-    t.modem.sendMsg(t.ra,t.port,sub,msg)
+end
+
+function lib.sendMsg(port,addr,sub,msg)
+  
+  if addr ~= nil then
+  
+    t.modem.sendMsg(addr,port,sub,msg)
   
   else
   
-    t.modem.broadcast(t.port,sub,msg)
+    t.modem.broadcast(port,sub,msg)
   
   end
   
 end
 
-function lib.receiveMsg(t,to)
+function lib.receiveMsg(port,addr,to)
   local ra , po
   local ti = os.clock()
   
-  if t.addr ~= nil then 
+  if addr ~= nil then 
   
-    while a ~= t.addr and po ~= t.port do
+    while ra ~= addr and po ~= port do
     
       ev,la,ra,po,d,sub,msg = event.pull("modem_message",to)
 
@@ -39,7 +56,7 @@ function lib.receiveMsg(t,to)
   
   else
     
- while po ~= t.port do
+ while po ~= port do
     
       ev,la,ra,po,d,sub,msg = event.pull("modem_message",to)
 
@@ -51,6 +68,41 @@ function lib.receiveMsg(t,to)
   
   return ra,sub,msg
   
+end
+
+function lib.sendKey(port,addr,algo,crypto,ksize)
+
+  local pub,pri = crypto.generateKeyPair(algo,ksize)
+  sendMsg(t,"key",pub)
+  return pri
+  
+end
+
+function lib.receiveKey(port,addr,algo,crypto,to)
+
+  local str,idn = receiveMsg(port,addr,to)
+  pub = crypto.decodeKey(algo,str)
+  return pub,idn
+  
+end
+
+function lib.sendMsgEnc(port,addr,msg,pri,algo)
+  local b,commt = msg,{}
+  for i = 1,math.ceil(msg:len()/55) do
+    a,b = split(b,55)
+    commt[i] = pri.encrypt(algo,a)
+  end
+  comm = ser.serialize(commt)
+  sendMsg(port,addr,sub,comm)
+end
+
+function lib.receiveMsgEnc(port,addr,pub,algo,to)
+  comm = receiveMsg(port,addr,to)
+  local str = ""
+  for k,v in pairs(ser.unserialize(comm)) do
+    str = str..pub.decrypt(algo,v)
+  end
+  return str
 end
 
 return lib

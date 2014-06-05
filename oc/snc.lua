@@ -31,7 +31,7 @@ function lib.receiveMsg(t,to)
   
     while a ~= t.addr and po ~= t.port do
     
-      la,ra,po,d,msg = event.pull("modem_message",to)
+      ev,la,ra,po,d,msg = event.pull("modem_message",to)
 
       if to ~= nil then assert(ti <= to,"Request Timed Out") end
     
@@ -41,7 +41,7 @@ function lib.receiveMsg(t,to)
     
  while po ~= t.port do
     
-      la,ra,po,d,msg = event.pull("modem_message",to)
+      ev,la,ra,po,d,msg = event.pull("modem_message",to)
 
       if to ~= nil then assert(ti <= to,"Request Timed Out") end
     

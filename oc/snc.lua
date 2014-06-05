@@ -1,5 +1,12 @@
 local lib = {}
 local event = require("event")
+local com = require("component")
+
+function lib.open(t)
+
+	com.modem.open(t.po)
+	
+end
 
 function lib.sendMsg(t,msg)
   

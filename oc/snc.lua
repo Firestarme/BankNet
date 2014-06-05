@@ -15,7 +15,7 @@ function lib.sendMsg(t,msg)
   
 end
 
-function lib.recieveMsg(t,to)
+function lib.receiveMsg(t,to)
   local ra , po
   local ti = os.clock()
   

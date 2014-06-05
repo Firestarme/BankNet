@@ -1,5 +1,5 @@
 local lib = {}
-lib.event = require("event")
+local event = require("event")
 
 function lib.sendMsg(t,msg)
   

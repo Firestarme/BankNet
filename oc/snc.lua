@@ -9,15 +9,15 @@ function lib.open(t)
 	
 end
 
-function lib.sendMsg(t,msg)
+function lib.sendMsg(t,sub,msg)
   
   if t.ra ~= nil then
   
-    t.modem.sendMsg(t.ra,t.port,msg)
+    t.modem.sendMsg(t.ra,t.port,sub,msg)
   
   else
   
-    t.modem.broadcast(t.port,msg)
+    t.modem.broadcast(t.port,sub,msg)
   
   end
   
@@ -31,7 +31,7 @@ function lib.receiveMsg(t,to)
   
     while a ~= t.addr and po ~= t.port do
     
-      ev,la,ra,po,d,msg = event.pull("modem_message",to)
+      ev,la,ra,po,d,sub,msg = event.pull("modem_message",to)
 
       if to ~= nil then assert(ti <= to,"Request Timed Out") end
     
@@ -41,13 +41,15 @@ function lib.receiveMsg(t,to)
     
  while po ~= t.port do
     
-      ev,la,ra,po,d,msg = event.pull("modem_message",to)
+      ev,la,ra,po,d,sub,msg = event.pull("modem_message",to)
 
       if to ~= nil then assert(ti <= to,"Request Timed Out") end
     
     end
   
   end
+  
+  return ra,sub,msg
   
 end
 

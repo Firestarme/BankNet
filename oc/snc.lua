@@ -1,4 +1,5 @@
 local lib = {}
+
 local event = require("event")
 local com = require("component")
 
@@ -12,11 +13,11 @@ function lib.sendMsg(t,msg)
   
   if t.ra ~= nil then
   
-    t.modem.sendMsg(t.ra,t.p,msg)
+    t.modem.sendMsg(t.ra,t.port,msg)
   
   else
   
-    t.modem.broadcast(t.p,msg)
+    t.modem.broadcast(t.port,msg)
   
   end
   
@@ -26,11 +27,11 @@ function lib.receiveMsg(t,to)
   local ra , po
   local ti = os.clock()
   
-  if t.ra ~= nil then 
+  if t.addr ~= nil then 
   
-    while ra ~= t.ra and po ~= t.po do
+    while a ~= t.addr and po ~= t.port do
     
-      la,ra,po,d,msg = event.pull("modem_message",t.to)
+      la,ra,po,d,msg = event.pull("modem_message",to)
 
       if to ~= nil then assert(ti <= to,"Request Timed Out") end
     
@@ -38,9 +39,9 @@ function lib.receiveMsg(t,to)
   
   else
     
-  while po ~= t.po do
+ while po ~= t.port do
     
-      la,ra,po,d,msg = event.pull("modem_message",t.to)
+      la,ra,po,d,msg = event.pull("modem_message",to)
 
       if to ~= nil then assert(ti <= to,"Request Timed Out") end
     

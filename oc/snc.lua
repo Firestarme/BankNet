@@ -26,15 +26,15 @@ local function split(s,l)
   
 end
 
-local function sendMsg(port,addr,sub,msg)
+local function sendMsg(port,modem,addr,sub,msg)
   
   if addr ~= nil then
   
-    t.modem.sendMsg(addr,port,sub,msg)
+    modem.sendMsg(addr,port,sub,msg)
   
   else
   
-    t.modem.broadcast(port,sub,msg)
+    modem.broadcast(port,sub,msg)
   
   end
   
@@ -70,10 +70,10 @@ local function receiveMsg(port,addr,to)
   
 end
 
-function lib.sendKey(port,addr,algo,crypto,ksize)
+function lib.sendKey(port,modem,addr,algo,crypto,ksize)
 
   local pub,pri = crypto.generateKeyPair(algo,ksize)
-  sendMsg(t,"key",pub)
+  sendMsg(port,modem,addr,"key",pub)
   return pri
   
 end

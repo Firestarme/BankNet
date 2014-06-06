@@ -26,7 +26,7 @@ local function split(s,l)
   
 end
 
-function lib.sendMsg(port,addr,sub,msg)
+local function sendMsg(port,addr,sub,msg)
   
   if addr ~= nil then
   
@@ -40,7 +40,7 @@ function lib.sendMsg(port,addr,sub,msg)
   
 end
 
-function lib.receiveMsg(port,addr,to)
+local function receiveMsg(port,addr,to)
   local ra , po
   local ti = os.clock()
   

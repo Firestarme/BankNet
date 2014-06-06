@@ -26,15 +26,15 @@ local function split(s,l)
   
 end
 
-local function sendMsg(port,modem,addr,sub,msg)
+local function sendMsg(port,modem,addr,msg)
   
   if addr ~= nil then
   
-    modem.sendMsg(addr,port,sub,msg)
+    modem.sendMsg(addr,port,msg)
   
   else
   
-    modem.broadcast(port,sub,msg)
+    modem.broadcast(port,msg)
   
   end
   
@@ -48,7 +48,7 @@ local function receiveMsg(port,addr,to)
   
     while ra ~= addr and po ~= port do
     
-      ev,la,ra,po,d,sub,msg = event.pull("modem_message",to)
+      ev,la,ra,po,d,msg = event.pull("modem_message",to)
 
       if to ~= nil then assert(ti <= to,"Request Timed Out") end
     
@@ -58,51 +58,51 @@ local function receiveMsg(port,addr,to)
     
  while po ~= port do
     
-      ev,la,ra,po,d,sub,msg = event.pull("modem_message",to)
+      ev,la,ra,po,d,msg = event.pull("modem_message",to)
 
       if to ~= nil then assert(ti <= to,"Request Timed Out") end
     
     end
-  
+
   end
   
-  return ra,sub,msg
+  return ra,msg
   
 end
 
 function lib.sendKey(port,modem,addr,algo,crypto,ksize)
 
   local pub,pri = crypto.generateKeyPair(algo,ksize)
-  sendMsg(port,modem,addr,"key",pub)
+  sendMsg(port,modem,addr,pub)
   return pri
   
 end
 
 function lib.receiveKey(port,addr,algo,crypto,to)
 
-  local str,idn = receiveMsg(port,addr,to)
+  local ra,str = receiveMsg(port,addr,to)
   pub = crypto.decodeKey(algo,str)
-  return pub,idn
+  return pub,ra
   
 end
 
-function lib.sendMsgEnc(port,addr,msg,pri,algo)
+function lib.sendMsgEnc(port,modem,addr,msg,pri,algo)
   local b,commt = msg,{}
   for i = 1,math.ceil(msg:len()/55) do
     a,b = split(b,55)
     commt[i] = pri.encrypt(algo,a)
   end
   comm = ser.serialize(commt)
-  sendMsg(port,addr,sub,comm)
+  sendMsg(port,modem,addr,comm)
 end
 
 function lib.receiveMsgEnc(port,addr,pub,algo,to)
-  comm = receiveMsg(port,addr,to)
+  ra,comm = receiveMsg(port,addr,to)
   local str = ""
   for k,v in pairs(ser.unserialize(comm)) do
     str = str..pub.decrypt(algo,v)
   end
-  return str
+  return str,ra
 end
 
 return lib

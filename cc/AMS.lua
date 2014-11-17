@@ -12,6 +12,7 @@
 --		-frozen : whether the account has been frozen
 -- fa : same as na for transactions (account the money is transferred from)
 -- ta :	same as na for transactions (account the money is transferred to)
+-- *q : quantity operated on by request
 -- *hpin : the hashed pin supplied by the request
 -- *htcode: the hashed tcode supplied by the request
 -- *op : the operation that is requested (cash,transac,bal,nPin,nTcode,freeze)
@@ -22,6 +23,7 @@
 --## local utility functions ##--
 
 local opt = {cash,transac,bal,nPin,nTcode,freeze}
+local ops = 'Operation Sucessful'
 	
 local function readFile(path)
 
@@ -143,6 +145,8 @@ function opt.cash()
 	na.amount = b
 		
 	log(lRoot..n,genOut(q).." :Cash")
+	
+	return ops
 
 end
 
@@ -166,6 +170,9 @@ function opt.transac()
 	ta.amount = ta.amount + q
 
 	log(lRoot..t,genOut(q).." :Transfered From "..f.." ("..fa.name..")")
+	
+	return ops
+	
 end
 
 function opt.bal()
@@ -182,6 +189,8 @@ function opt.nPin()
 	nilCheck(nhpin,"new pin")
 	
 	na.ohpin = nhpin
+	
+	return ops
 
 end
 
@@ -192,6 +201,8 @@ function opt.nTcode()
 	nilCheck(nhtcode,"new transac code")
 	
 	na.ohtcode = nhtcode
+	
+	return ops
 
 end
 
@@ -200,6 +211,8 @@ function opt.freeze()
 	vPin(na.ohpin,hpin)
 	
 	na.frozen = true
+	
+	return ops
 
 end
 	

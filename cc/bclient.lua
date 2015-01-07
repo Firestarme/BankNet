@@ -10,6 +10,17 @@
 -- nhpin : new hashed pin (used for changing your pin)
 -- nhtcode : new hashed tcode (used for changing your tcode)
 
+--# Load APIs #--
+
+if not shell.resolve('SNC') == 'SNC' then
+  shell.setPath(shell.path()..':disk/banknet')
+end
+
+os.loadAPI('SNC')
+os.loadAPI('AMS')
+
+--# Define Conduit Arguments #--
+
 args = {
 
 	cr = peripheral.find("cryptographic accelerator"),
@@ -17,6 +28,8 @@ args = {
 	hn = "BankServer"
 
 }
+
+--# Main Body #--
 
 MainCond = SNC.stConduit:newConduit(args)
 

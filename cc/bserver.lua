@@ -1,5 +1,9 @@
 --## load APIS ##--
 
+if not shell.resolve('SNC') == 'SNC' then
+  shell.setPath(shell.path()..':disk/banknet')
+end
+
 os.loadAPI("SNC")
 os.loadAPI("AMS")
 

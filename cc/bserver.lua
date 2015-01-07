@@ -2,8 +2,8 @@
 
 shell.setDir('disk/banknet')
 
-os.loadAPI("SNC")
-os.loadAPI("AMS")
+os.loadAPI("disk/banknet/SNC")
+os.loadAPI("disk/banknet/AMS")
 
 --## Defining server functions and variables ##--
 

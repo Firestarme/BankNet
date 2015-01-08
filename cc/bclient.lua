@@ -22,7 +22,6 @@ args = {
 	cr = peripheral.find("cryptographic accelerator"),
 	pr = "BankNet",
 	hn = "BankServer"
-	s = 'left'
 
 }
 

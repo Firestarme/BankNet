@@ -43,6 +43,14 @@ StConduit =	{
 
 --## Local functions called by the interface ##--
 
+local function getSide()
+	local s
+	for k,v in pairs(peripheral.getNames()) do
+		if peripheral.getType(v) == 'modem' then s = v break end
+	end
+	return s
+end
+
 local function loadPSK(id)
 	h = fs.open("data/crypt/"..id,"r")
 	str = h.readAll() 
@@ -136,6 +144,7 @@ end
 function StConduit:init()
 	setfenv(1,self)
 	
+	if s == nil then s = getSide() end
 	rednet.open(s)
 	
 	id = rednet.lookup(pr,hn)

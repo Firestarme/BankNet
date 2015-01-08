@@ -11,6 +11,7 @@ StConduit =	{
 	ha = "SHA256",
 	to = 50,
 	suc = false,
+	root = 'disk/'
 }
 
 --## variables used ##--
@@ -50,8 +51,8 @@ local function getSide()
 	return s
 end
 
-local function loadPSK(id)
-	h = fs.open("data/crypt/"..id,"r")
+local function loadPSK(id,root)
+	h = fs.open(root.."data/crypt/"..id,"r")
 	str = h.readAll() 
 	h.close()
 	return str
@@ -75,8 +76,8 @@ local function prepMsg(str,psk,cr,ha)
 	return str.."$"..generatehmac(str,psk,cr,ha)
 end
 
-local function sendMsg(id,msg,pr,cr,ha)
-	psk = loadPSK(id)
+local function sendMsg(id,msg,pr,cr,ha,root)
+	psk = loadPSK(id,root)
 	rednet.send(id,prepMsg(msg,psk,cr,ha),pr)
 end
 
@@ -105,9 +106,9 @@ local function receiveMsg(id,pr,cr,ha,to)
 		return str,idn,suc
 end
 
-local function sendKey(id,pr,cr,ka,ks,cr,ha)
+local function sendKey(id,pr,cr,ka,ks,cr,ha,root)
 	pub,pri = cr.generateKeyPair(ka,ks)
-	sendMsg(id,pub.encode(),pr,cr,ha)
+	sendMsg(id,pub.encode(),pr,cr,ha,root)
 	return pri
 end
 
@@ -117,9 +118,9 @@ local function receiveKey(id,pr,ka,cr,ha,to)
 	return pub,idn,suc
 end
 
-local function sendMsgEnc(id,msg,pr,cr,ha,pri,ma)
+local function sendMsgEnc(id,msg,pr,cr,ha,pri,ma,root)
 	comm = pri.encrypt(ma,msg)
-	sendMsg(id,comm,pr,cr,ha)
+	sendMsg(id,comm,pr,cr,ha,root)
 end
 
 local function receiveMsgEnc(id,pr,cr,ha,pub,ma,to)
@@ -147,7 +148,7 @@ function StConduit:init()
 	rednet.open(s)
 	
 	id = rednet.lookup(pr,hn)
-	pri = sendKey(id,pr..":k",cr,ka,ks,cr,ha)
+	pri = sendKey(id,pr..":k",cr,ka,ks,cr,ha,root)
 	pub = receiveKey(id,pr..":k",ka,cr,ha,to)
 	
 end
@@ -170,7 +171,7 @@ end
 function StConduit:send(msg)
 	setfenv(1,self)
 
-	sendMsgEnc(id,msg,pr,cr,ha,pri,ma)
+	sendMsgEnc(id,msg,pr,cr,ha,pri,ma,root)
 	
 end
 

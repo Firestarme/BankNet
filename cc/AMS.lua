@@ -313,10 +313,10 @@ function access:create()
 		
 	}
 	
-	n = tonumber(readFile(nxNumPath))
-	saveFile(n+1,nxNumPath)
+	n = tonumber(readFile(root..nxNumPath))
+	saveFile(n+1,root..nxNumPath)
 	
-	checkName(name,n,nListPath)
+	nameCheck(name,n,root..nListPath)
 	
 	path = root..aRoot..n
 end

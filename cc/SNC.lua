@@ -11,7 +11,6 @@ StConduit =	{
 	ha = "SHA256",
 	to = 50,
 	suc = false,
-	s = "back"
 }
 
 --## variables used ##--

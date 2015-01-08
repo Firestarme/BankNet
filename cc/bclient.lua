@@ -27,7 +27,7 @@ args = {
 
 --# Main Body #--
 
-MainCond = SNC.stConduit:newConduit(args)
+MainCond = SNC.StConduit:newConduit(args)
 
 function input(prom,covr)
 	

@@ -114,7 +114,7 @@ local function nameCheck(name,n,path)
 	
 	nList[n] = name
 	
-	saveFile(textutils.serialize(nList))
+	saveFile(textutils.serialize(nList),path)
 
 end
 

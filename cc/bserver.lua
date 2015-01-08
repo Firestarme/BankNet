@@ -26,7 +26,7 @@ end
 
 function operate(o)
 	
-	o.root = peripheral.call('drive_2','getMountPath')
+	o.root = peripheral.call('drive_2','getMountPath')..'/'
 	acc = AMS.access:new(o)
 	acc:open()
 	ret = acc:operate()

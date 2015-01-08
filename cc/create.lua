@@ -25,7 +25,7 @@ arg = {
   name = name,
   hpin = hpin,
   htcode = htcode,
-  root = peripheral.call('drive_2','getMountPath') 
+  root = peripheral.call('drive_2','getMountPath')..'/'
 }
 
 --# Create Account #--

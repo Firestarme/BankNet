@@ -12,8 +12,8 @@
 
 --# Load APIs #--
 
-os.loadAPI('disk/banknet/SNC')
-os.loadAPI('disk/banknet/AMS')
+assert(os.loadAPI('disk/banknet/SNC'),'Could not load SNC lib')
+assert(os.loadAPI('disk/banknet/AMS'),'Could not load AMS lib')
 
 --# Define Conduit Arguments #--
 

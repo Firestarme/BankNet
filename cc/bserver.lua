@@ -1,9 +1,7 @@
 --## load APIS ##--
 
-shell.setDir('disk/banknet')
-
-os.loadAPI("disk/banknet/SNC")
-os.loadAPI("disk/banknet/AMS")
+assert(os.loadAPI('disk/banknet/SNC'),'Could not load SNC lib')
+assert(os.loadAPI('disk/banknet/AMS'),'Could not load AMS lib')
 
 --## Defining server functions and variables ##--
 

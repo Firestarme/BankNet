@@ -219,7 +219,8 @@ end
 --## Account Access API ##--
 		
 access = {
-
+	
+	root = "disk/",
 	aRoot = "data/accounts/",
 	lRoot = "data/logs/",
 	nxNumPath = "data/nxNum",
@@ -249,8 +250,8 @@ function access:open()
 		nilCheck(f,"account number (from)")
 		nilCheck(t,"account number (to)")
 		
-		fpath = aRoot..f
-		tpath = aRoot..t
+		fpath = root..aRoot..f
+		tpath = root..aRoot..t
 		
 		assert(fs.exists(fpath),"account "..f.."Does not exist")
 		assert(fs.exists(tpath),"account "..t.."Does not exist")
@@ -261,7 +262,7 @@ function access:open()
 		
 		nilCheck(n,"account number")
 		
-		path = aRoot..n
+		path = root..aRoot..n
 		
 		assert(fs.exists(path),"account "..n.."Does not exist")
 
@@ -317,6 +318,6 @@ function access:create()
 	
 	checkName(name,n,nListPath)
 	
-	path = aRoot..n
+	path = root..aRoot..n
 end
 

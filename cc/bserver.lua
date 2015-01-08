@@ -10,6 +10,7 @@ args = {
 	cr = peripheral.find("cryptographic accelerator"),
 	pr = "BankNet",
 	hn = "BankServer",
+	root = peripheral.call('drive_2','getMountPath'),
 
 }
 

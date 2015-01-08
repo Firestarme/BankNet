@@ -118,6 +118,26 @@ local function nameCheck(name,n,path)
 
 end
 
+local function getNextNumber(path)
+	
+	local n
+	
+	if fs.exists(path) then
+	
+		n = tonumber(readFile(root..nxNumPath))
+	
+	else
+	
+		n = 100
+	
+	end
+	
+	saveFile(n+1,root..nxNumPath)
+	
+	return n
+	
+end
+
 local function nilCheck(var,varname)
 
 	assert(var ~= nil,"no "..varname.." specified")
@@ -313,9 +333,8 @@ function access:create()
 		
 	}
 	
-	n = tonumber(readFile(root..nxNumPath))
-	saveFile(n+1,root..nxNumPath)
 	
+	n = getNextNumber()
 	nameCheck(name,n,root..nListPath)
 	
 	path = root..aRoot..n

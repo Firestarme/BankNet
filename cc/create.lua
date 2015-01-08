@@ -22,9 +22,9 @@ local htcode = cr.hash('SHA-512',input('Please Ener Your Transaction Code','*'))
 --# Define Access Arguments #--
 
 arg = {
-  name = name
-  hpin = hpin
-  htcode = htcode
+  name = name,
+  hpin = hpin,
+  htcode = htcode,
   root = peripheral.call('drive_2','getMountPath') 
 }
 

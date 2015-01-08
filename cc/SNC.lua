@@ -156,6 +156,7 @@ end
 function StConduit:serverInit()
 	setfenv(1,self)
 
+	if s == nil then s = getSide() end
 	rednet.open(s)
 	
 	rednet.host(pr,hn)

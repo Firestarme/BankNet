@@ -10,7 +10,7 @@ args = {
 	cr = peripheral.find("cryptographic accelerator"),
 	pr = "BankNet",
 	hn = "BankServer",
-	root = peripheral.call('drive_2','getMountPath'),
+	root = peripheral.call('drive_1','getMountPath'),
 
 }
 
@@ -26,6 +26,7 @@ end
 
 function operate(o)
 	
+	o.root = peripheral.call('drive_2','getMountPath')
 	acc = AMS.access:new(o)
 	acc:open()
 	ret = acc:operate()

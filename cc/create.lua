@@ -31,7 +31,7 @@ arg = {
 --# Create Account #--
 
 local acc = AMS.access:new(arg)
-sta,err = pcall(acc:create())
+sta,err = pcall(acc:create)
 if sta then
   print(acc.name..', your new account number is: '..acc.n)
 else

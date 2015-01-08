@@ -15,9 +15,9 @@ end
 
 --# Obtain Account Info #--
 
-local name = input('Please Ener Your Name')
+local name = input('Please Enter Your Name')
 local hpin = cr.hash('SHA-512',input('Please Enter Your PIN','*'))
-local htcode = cr.hash('SHA-512',input('Please Ener Your Transaction Code','*'))
+local htcode = cr.hash('SHA-512',input('Please Enter Your Transaction Code','*'))
 
 --# Define Access Arguments #--
 

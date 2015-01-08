@@ -124,7 +124,7 @@ local function getNextNumber(path)
 	
 	if fs.exists(path) then
 	
-		n = tonumber(readFile(root..nxNumPath))
+		n = tonumber(readFile(path))
 	
 	else
 	
@@ -132,7 +132,7 @@ local function getNextNumber(path)
 	
 	end
 	
-	saveFile(n+1,root..nxNumPath)
+	saveFile(n+1,path)
 	
 	return n
 	
@@ -334,7 +334,7 @@ function access:create()
 	}
 	
 	
-	n = getNextNumber()
+	n = getNextNumber(root..nxNumPath)
 	nameCheck(name,n,root..nListPath)
 	
 	path = root..aRoot..n

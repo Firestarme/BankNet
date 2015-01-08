@@ -27,6 +27,8 @@ args = {
 
 --# Main Body #--
 
+local halgo = 'SHA-512'
+
 MainCond = SNC.StConduit:newConduit(args)
 
 function input(prom,covr)
@@ -52,7 +54,7 @@ function opt.cash(tbl)
 	
 	tbl.n = input('Enter Your Account Number')
 	tbl.q = input('Enter The Quantity Needed')
-	tbl.hpin = args.cr.hash('SHA256',input('Enter Your Pin'))
+	tbl.hpin = args.cr.hash(halgo,input('Enter Your Pin'))
 	
 	return tbl
 
@@ -63,8 +65,8 @@ function opt.transac(tbl)
 	tbl.fn = input('Enter The Source Account Number')
 	tbl.tn = input('Enter The Destination Account Number')
 	tbl.q = input('Enter The Quantity To Be Transferred')
-	tbl.hpin = args.cr.hash('SHA256',input('Enter Your Pin'))
-	tbl.htcode = args.cr.hash('SHA256',input('Enter Your TCode'))
+	tbl.hpin = args.cr.hash(halgo,input('Enter Your Pin'))
+	tbl.htcode = args.cr.hash(halgo,input('Enter Your TCode'))
 	
 	return tbl
 
@@ -81,8 +83,8 @@ end
 function opt.nPin(tbl)
 
 	tbl.n = input('Enter Your Account Number')
-	tbl.hpin = args.cr.hash('SHA256',input('Enter Your Pin'))
-	tbl.nhpin = args.cr.hash('SHA256',input('Enter Your New Pin'))
+	tbl.hpin = args.cr.hash(halgo,input('Enter Your Pin'))
+	tbl.nhpin = args.cr.hash(halgo,input('Enter Your New Pin'))
 	
 	return tbl
 
@@ -91,8 +93,8 @@ end
 function opt.nTcode(tbl)
 	
 	tbl.n = input('Enter Your Account Number')
-	tbl.hpin = args.cr.hash('SHA256',input('Enter Your Pin'))
-	tbl.nhtcode = args.cr.hash('SHA256',input('Enter Your New TCode'))
+	tbl.hpin = args.cr.hash(halgo,input('Enter Your Pin'))
+	tbl.nhtcode = args.cr.hash(halgo,input('Enter Your New TCode'))
 	
 	return tbl
 
@@ -101,7 +103,7 @@ end
 function opt.freeze(tbl)
 
 	tbl.n = input('Enter Your Account Number')
-	tbl.hpin = args.cr.hash('SHA256',input('Enter Your Pin'))
+	tbl.hpin = args.cr.hash(halgo,input('Enter Your Pin'))
 	
 	return tbl
 
